@@ -11,7 +11,7 @@ double left_speed = 0;
 //go to gulags
 double right_speed = 0;
 int UserControlMode = 0;
-int AutonomousMode =7;
+int AutonomousMode =8;
 int AutonMin = 0;
 int AutonMax = 8;
 bool isred = true;
@@ -168,10 +168,10 @@ void Drivecoast()
   RightBack.stop(coast); // 
 }
 float pi = 3.14;
-float dia = 3.25;
+float dia = 4;
 float diaO = 2;
-float gearRatio = 0.75;
-float width = 14;
+float gearRatio = 0;
+float width = 12.5;
 void Drive_Autonomous_Volt(int LeftSpeed, int RightSpeed, int WaitTime)
 {
   LeftFront.spin(fwd, LeftSpeed / 100 * 120, volt);
@@ -671,10 +671,10 @@ void inchDriveC3(float target, float timeLimit, float mspeed,bool chained = fals
   float x = 0;
   float error2 = target;
   float error = target;
-  float kp = 7;
+  float kp = 1;
   float speed = kp * error;
   float accuracy = 0.05; // was 0.05
-  float kd = 0.4;
+  float kd = 0;
   double last_error = 0;
   double dt = 0.01;
   double last_speed = 0;
@@ -713,16 +713,14 @@ void inchDriveC3(float target, float timeLimit, float mspeed,bool chained = fals
     drive(mspeed*(speed+turn_speed), mspeed*(speed-turn_speed), 10);
     last_error = error;
     angle_last_error = angle_error;
-    if(fabs(angle_error)<= aacuracy){
-      target2 = target3;
-    }
+
     if (timer.time(vex::timeUnits::msec) >= timeLimit)
     {
       break;
     }
     std::cout << x << std::endl;
   }
-  DriveBrake();
+DriveBrake();
 }else{
     while (fabs(error) >= accuracy){
 
@@ -760,9 +758,7 @@ void inchDriveC3(float target, float timeLimit, float mspeed,bool chained = fals
       drive(mspeed*(speed+turn_speed), mspeed*(speed-turn_speed), 10);
       last_error = error;
       angle_last_error = angle_error;
-      if(fabs(angle_error)<= aacuracy){
-        target2 = target3;
-      }
+
       if (timer.time(vex::timeUnits::msec) >= timeLimit)
       {
         break;
@@ -907,7 +903,7 @@ void Align(){
 
 }
 }
-LeftFront
+
 void inchDriveO(float target, float timeLimit, float mspeed, float chainspeed = 40,double target2 = Gyro.rotation(), double target3 = Gyro.rotation(), int c = 0)
 {
   float heading = 0;
@@ -2526,8 +2522,7 @@ void autonomous(void)
     break;
     case 8:
 //skills auton
-    inchDriveO(24,1000,1,0);
-    DriveBrake();
+    inchDriveC3(24,1000,1);
   }
 }
 void pre_auton(void)
